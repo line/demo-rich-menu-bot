@@ -74,7 +74,7 @@ foreach ($events as $event) {
         $bot->replyMessage($event->getReplyToken(),new \LINE\LINEBot\MessageBuilder\TextMessageBuilder(
           '"create" - create new Richmenu to channel.' . PHP_EOL .
           '"list" - show all Richmenu created via API' . PHP_EOL .
-          '"list > upload" - upload image to Richmenu' . PHP_EOL .
+          '"list > upload" - upload image to Richmenu. Image choosen randomly' . PHP_EOL .
           '"list > delete" - delete Richmenu' . PHP_EOL .
           '"list > link" - link Richmenu to user(you)' . PHP_EOL .
           '"unlink" - remove link to Richmenu of user(you)' . PHP_EOL .
@@ -161,7 +161,9 @@ function linkToUser($channelAccessToken, $userId, $richmenuId) {
   $sh = <<< EOF
   curl -X POST \
   -H 'Authorization: Bearer $channelAccessToken' \
-  https://api.line.me/v2/bot/richmenu/user?richMenuId=$richmenuId&userId=$userId
+  -d 'richMenuId=$richmenuId' \
+  -d 'userId=$userId' \
+  https://api.line.me/v2/bot/richmenu/user
 EOF;
   $result = json_decode(shell_exec(str_replace('\\', '', str_replace(PHP_EOL, '', $sh))), true);
   if(isset($result['message'])) {
