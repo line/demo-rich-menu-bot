@@ -1,5 +1,7 @@
 <?php
 
+// Using shell_exec for better understandability. Use cURL or other http client for production environment.
+
 require_once __DIR__ . '/vendor/autoload.php';
 
 $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient(getenv('CHANNEL_ACCESS_TOKEN'));
@@ -143,6 +145,9 @@ EOF;
 }
 
 function deleteRichmenu($channelAccessToken, $richmenuId) {
+  if(!isRichmenuIdValid($richmenuId)) {
+    return 'invalid richmenu id';
+  }
   $sh = <<< EOF
   curl -X DELETE \
   -H 'Authorization: Bearer $channelAccessToken' \
@@ -158,6 +163,9 @@ EOF;
 }
 
 function linkToUser($channelAccessToken, $userId, $richmenuId) {
+  if(!isRichmenuIdValid($richmenuId)) {
+    return 'invalid richmenu id';
+  }
   $sh = <<< EOF
   curl -X POST \
   -H 'Authorization: Bearer $channelAccessToken' \
@@ -175,6 +183,9 @@ EOF;
 }
 
 function uploadRandomImageToRichmenu($channelAccessToken, $richmenuId) {
+  if(!isRichmenuIdValid($richmenuId)) {
+    return 'invalid richmenu id';
+  }
   $randomImageIndex = rand(1, 5);
   $imagePath = realpath('') . '/' . 'controller_0' . $randomImageIndex . '.png';
   $sh = <<< EOF
@@ -191,6 +202,14 @@ EOF;
   }
   else {
     return 'success. Image #0' . $randomImageIndex . ' has uploaded onto ' . $richmenuId;
+  }
+}
+
+function isRichmenuIdValid($string) {
+  if(preg_match('/^[a-zA-Z0-9.]+$/', $string)) {
+    return true;
+  } else {
+    return false;
   }
 }
 
