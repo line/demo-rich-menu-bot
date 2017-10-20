@@ -94,7 +94,6 @@ function createNewRichmenu($channelAccessToken) {
   -H 'Content-Type:application/json' \
   -d '{"size": {"width": 2500,"height": 1686},"selected": false,"name": "Controller","chatBarText": "Controller","areas": [{"bounds": {"x": 551,"y": 325,"width": 321,"height": 321},"action": {"type": "message","text": "up"}},{"bounds": {"x": 876,"y": 651,"width": 321,"height": 321},"action": {"type": "message","text": "right"}},{"bounds": {"x": 551,"y": 972,"width": 321,"height": 321},"action": {"type": "message","text": "down"}},{"bounds": {"x": 225,"y": 651,"width": 321,"height": 321},"action": {"type": "message","text": "left"}},{"bounds": {"x": 1433,"y": 657,"width": 367,"height": 367},"action": {"type": "message","text": "btn b"}},{"bounds": {"x": 1907,"y": 657,"width": 367,"height": 367},"action": {"type": "message","text": "btn a"}}]}' https://api.line.me/v2/bot/richmenu;
 EOF;
-
   $result = json_decode(shell_exec(str_replace('\\', '', str_replace(PHP_EOL, '', $sh))), true);
   if(isset($result['richMenuId'])) {
     return $result['richMenuId'];
@@ -118,7 +117,7 @@ function checkRichmenuOfUser($channelAccessToken, $userId) {
   $sh = <<< EOF
   curl \
   -H 'Authorization: Bearer $channelAccessToken' \
-  https://api.line.me/v2/bot/richmenu/user?userId=$userId
+  https://api.line.me/v2/bot/user/$userId/richmenu
 EOF;
   $result = json_decode(shell_exec(str_replace('\\', '', str_replace(PHP_EOL, '', $sh))), true);
   if(isset($result['richMenuId'])) {
@@ -133,7 +132,7 @@ function unlinkFromUser($channelAccessToken, $userId) {
   $sh = <<< EOF
   curl -X DELETE \
   -H 'Authorization: Bearer $channelAccessToken' \
-  https://api.line.me/v2/bot/richmenu/user?userId=$userId
+  https://api.line.me/v2/bot/user/$userId/richmenu
 EOF;
   $result = json_decode(shell_exec(str_replace('\\', '', str_replace(PHP_EOL, '', $sh))), true);
   if(isset($result['message'])) {
@@ -151,7 +150,7 @@ function deleteRichmenu($channelAccessToken, $richmenuId) {
   $sh = <<< EOF
   curl -X DELETE \
   -H 'Authorization: Bearer $channelAccessToken' \
-  https://api.line.me/v2/bot/richmenu?richMenuId=$richmenuId
+  https://api.line.me/v2/bot/richmenu/$richmenuId
 EOF;
   $result = json_decode(shell_exec(str_replace('\\', '', str_replace(PHP_EOL, '', $sh))), true);
   if(isset($result['message'])) {
@@ -169,9 +168,8 @@ function linkToUser($channelAccessToken, $userId, $richmenuId) {
   $sh = <<< EOF
   curl -X POST \
   -H 'Authorization: Bearer $channelAccessToken' \
-  -d 'richMenuId=$richmenuId' \
-  -d 'userId=$userId' \
-  https://api.line.me/v2/bot/richmenu/user
+  -H 'Content-Length: 0' \
+  https://api.line.me/v2/bot/user/$userId/richmenu/$richmenuId
 EOF;
   $result = json_decode(shell_exec(str_replace('\\', '', str_replace(PHP_EOL, '', $sh))), true);
   if(isset($result['message'])) {
@@ -194,7 +192,7 @@ function uploadRandomImageToRichmenu($channelAccessToken, $richmenuId) {
   -H 'Content-Type: image/png' \
   -H 'Expect:' \
   -T $imagePath \
-  https://api.line.me/v2/bot/richmenu/content?richMenuId=$richmenuId
+  https://api.line.me/v2/bot/richmenu/$richmenuId/content
 EOF;
   $result = json_decode(shell_exec(str_replace('\\', '', str_replace(PHP_EOL, '', $sh))), true);
   if(isset($result['message'])) {
@@ -206,7 +204,7 @@ EOF;
 }
 
 function isRichmenuIdValid($string) {
-  if(preg_match('/^[a-zA-Z0-9.]+$/', $string)) {
+  if(preg_match('/^[a-zA-Z0-9-]+$/', $string)) {
     return true;
   } else {
     return false;
