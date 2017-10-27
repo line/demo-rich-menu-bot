@@ -6,7 +6,7 @@ This is a demo bot that demonstrates how you can use the Messaging API to create
 
 To run this bot, you'll need the following. 
 
-- Channel secret and channel access token. (For more information, see the [Getting started with the Messaging API](https://developers.line.me/en/docs/messaging-api/getting-started/) page of the [LINE Developers site])(https://developers.line.me/).
+- Channel secret and channel access token. (For more information, see the [Getting started with the Messaging API](https://developers.line.me/en/docs/messaging-api/getting-started/) page of the [LINE Developers site](https://developers.line.me/)).
 - PHP version 5.6 or higher.
 
 
