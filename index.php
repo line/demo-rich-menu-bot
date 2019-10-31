@@ -87,7 +87,7 @@ foreach ($events as $event) {
   }
 }
 
-function createRichmenu($channelAccessToken) {
+function createNewRichmenu($channelAccessToken) {
   $sh = <<< EOF
   curl -X POST \
   -H 'Authorization: Bearer JhG3pCQni+uU6JWkeWfSZK0KPHbz7UVsEeS7k0kiQKwkIweR7abXCdNdlEczoHpphVyWkl1corRFSV7HtHz9+IWJACk0OB9YEiquDCOOUFp1SGyPmGd6djWRCa7dOXciJhqgvYbSxiin46VY+bqsOVGUYhWQfeY8sLGRXgo3xvw=' \
