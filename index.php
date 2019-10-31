@@ -184,12 +184,12 @@ function uploadRandomImageToRichmenu($channelAccessToken, $richmenuId) {
   if(!isRichmenuIdValid($richmenuId)) {
     return 'invalid richmenu id';
   }
-  $randomImageIndex = rand(1, 5);
-  $imagePath = realpath('') . '/' . 'controller_0' . $randomImageIndex . '.png';
+  $randomImageIndex = rand(1, 1);
+  $imagePath = realpath('') . '/' . 'R1002' . $randomImageIndex . '.jpg';
   $sh = <<< EOF
   curl -X POST \
   -H 'Authorization: Bearer $channelAccessToken' \
-  -H 'Content-Type: image/png' \
+  -H 'Content-Type: image/jpg' \
   -H 'Expect:' \
   -T $imagePath \
   https://api.line.me/v2/bot/richmenu/$richmenuId/content
