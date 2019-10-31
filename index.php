@@ -87,12 +87,12 @@ foreach ($events as $event) {
   }
 }
 
-function createNewRichmenu($channelAccessToken) {
+function createRichmenu($channelAccessToken) {
   $sh = <<< EOF
   curl -X POST \
-  -H 'Authorization: Bearer $channelAccessToken' \
+  -H 'Authorization: Bearer JhG3pCQni+uU6JWkeWfSZK0KPHbz7UVsEeS7k0kiQKwkIweR7abXCdNdlEczoHpphVyWkl1corRFSV7HtHz9+IWJACk0OB9YEiquDCOOUFp1SGyPmGd6djWRCa7dOXciJhqgvYbSxiin46VY+bqsOVGUYhWQfeY8sLGRXgo3xvw=' \
   -H 'Content-Type:application/json' \
-  -d '{"size": {"width": 2500,"height": 1686},"selected": false,"name": "Controller","chatBarText": "Controller","areas": [{"bounds": {"x": 551,"y": 325,"width": 321,"height": 321},"action": {"type": "message","text": "up"}},{"bounds": {"x": 876,"y": 651,"width": 321,"height": 321},"action": {"type": "message","text": "right"}},{"bounds": {"x": 551,"y": 972,"width": 321,"height": 321},"action": {"type": "message","text": "down"}},{"bounds": {"x": 225,"y": 651,"width": 321,"height": 321},"action": {"type": "message","text": "left"}},{"bounds": {"x": 1433,"y": 657,"width": 367,"height": 367},"action": {"type": "message","text": "btn b"}},{"bounds": {"x": 1907,"y": 657,"width": 367,"height": 367},"action": {"type": "message","text": "btn a"}}]}' https://api.line.me/v2/bot/richmenu;
+  -d '{"size": {"width": 2500,"height": 1686},"selected": true,"name": "Controller","chatBarText": "Controller","areas": [{"bounds": {"x": 551,"y": 325,"width": 321,"height": 321},"action": {"type": "message","text": "up"}},{"bounds": {"x": 876,"y": 651,"width": 321,"height": 321},"action": {"type": "message","text": "right"}},{"bounds": {"x": 551,"y": 972,"width": 321,"height": 321},"action": {"type": "message","text": "down"}},{"bounds": {"x": 225,"y": 651,"width": 321,"height": 321},"action": {"type": "message","text": "left"}},{"bounds": {"x": 1433,"y": 657,"width": 367,"height": 367},"action": {"type": "message","text": "btn b"}},{"bounds": {"x": 1907,"y": 657,"width": 367,"height": 367},"action": {"type": "message","text": "btn a"}}]}' https://api.line.me/v2/bot/richmenu;
 EOF;
   $result = json_decode(shell_exec(str_replace('\\', '', str_replace(PHP_EOL, '', $sh))), true);
   if(isset($result['richMenuId'])) {
@@ -106,7 +106,7 @@ EOF;
 function getListOfRichmenu($channelAccessToken) {
   $sh = <<< EOF
   curl \
-  -H 'Authorization: Bearer $channelAccessToken' \
+  -H 'Authorization: Bearer JhG3pCQni+uU6JWkeWfSZK0KPHbz7UVsEeS7k0kiQKwkIweR7abXCdNdlEczoHpphVyWkl1corRFSV7HtHz9+IWJACk0OB9YEiquDCOOUFp1SGyPmGd6djWRCa7dOXciJhqgvYbSxiin46VY+bqsOVGUYhWQfeY8sLGRXgo3xvw=' \
   https://api.line.me/v2/bot/richmenu/list;
 EOF;
   $result = json_decode(shell_exec(str_replace('\\', '', str_replace(PHP_EOL, '', $sh))), true);
@@ -116,7 +116,7 @@ EOF;
 function checkRichmenuOfUser($channelAccessToken, $userId) {
   $sh = <<< EOF
   curl \
-  -H 'Authorization: Bearer $channelAccessToken' \
+  -H 'Authorization: Bearer JhG3pCQni+uU6JWkeWfSZK0KPHbz7UVsEeS7k0kiQKwkIweR7abXCdNdlEczoHpphVyWkl1corRFSV7HtHz9+IWJACk0OB9YEiquDCOOUFp1SGyPmGd6djWRCa7dOXciJhqgvYbSxiin46VY+bqsOVGUYhWQfeY8sLGRXgo3xvw=' \
   https://api.line.me/v2/bot/user/$userId/richmenu
 EOF;
   $result = json_decode(shell_exec(str_replace('\\', '', str_replace(PHP_EOL, '', $sh))), true);
@@ -131,7 +131,7 @@ EOF;
 function unlinkFromUser($channelAccessToken, $userId) {
   $sh = <<< EOF
   curl -X DELETE \
-  -H 'Authorization: Bearer $channelAccessToken' \
+  -H 'Authorization: Bearer JhG3pCQni+uU6JWkeWfSZK0KPHbz7UVsEeS7k0kiQKwkIweR7abXCdNdlEczoHpphVyWkl1corRFSV7HtHz9+IWJACk0OB9YEiquDCOOUFp1SGyPmGd6djWRCa7dOXciJhqgvYbSxiin46VY+bqsOVGUYhWQfeY8sLGRXgo3xvw=' \
   https://api.line.me/v2/bot/user/$userId/richmenu
 EOF;
   $result = json_decode(shell_exec(str_replace('\\', '', str_replace(PHP_EOL, '', $sh))), true);
@@ -149,7 +149,7 @@ function deleteRichmenu($channelAccessToken, $richmenuId) {
   }
   $sh = <<< EOF
   curl -X DELETE \
-  -H 'Authorization: Bearer $channelAccessToken' \
+  -H 'Authorization: Bearer JhG3pCQni+uU6JWkeWfSZK0KPHbz7UVsEeS7k0kiQKwkIweR7abXCdNdlEczoHpphVyWkl1corRFSV7HtHz9+IWJACk0OB9YEiquDCOOUFp1SGyPmGd6djWRCa7dOXciJhqgvYbSxiin46VY+bqsOVGUYhWQfeY8sLGRXgo3xvw=' \
   https://api.line.me/v2/bot/richmenu/$richmenuId
 EOF;
   $result = json_decode(shell_exec(str_replace('\\', '', str_replace(PHP_EOL, '', $sh))), true);
@@ -167,7 +167,7 @@ function linkToUser($channelAccessToken, $userId, $richmenuId) {
   }
   $sh = <<< EOF
   curl -X POST \
-  -H 'Authorization: Bearer $channelAccessToken' \
+  -H 'Authorization: Bearer JhG3pCQni+uU6JWkeWfSZK0KPHbz7UVsEeS7k0kiQKwkIweR7abXCdNdlEczoHpphVyWkl1corRFSV7HtHz9+IWJACk0OB9YEiquDCOOUFp1SGyPmGd6djWRCa7dOXciJhqgvYbSxiin46VY+bqsOVGUYhWQfeY8sLGRXgo3xvw=' \
   -H 'Content-Length: 0' \
   https://api.line.me/v2/bot/user/$userId/richmenu/$richmenuId
 EOF;
@@ -188,7 +188,7 @@ function uploadRandomImageToRichmenu($channelAccessToken, $richmenuId) {
   $imagePath = realpath('') . '/' . 'R1002' . $randomImageIndex . '.jpg';
   $sh = <<< EOF
   curl -X POST \
-  -H 'Authorization: Bearer $channelAccessToken' \
+  -H 'Authorization: Bearer JhG3pCQni+uU6JWkeWfSZK0KPHbz7UVsEeS7k0kiQKwkIweR7abXCdNdlEczoHpphVyWkl1corRFSV7HtHz9+IWJACk0OB9YEiquDCOOUFp1SGyPmGd6djWRCa7dOXciJhqgvYbSxiin46VY+bqsOVGUYhWQfeY8sLGRXgo3xvw=' \
   -H 'Content-Type: image/jpg' \
   -H 'Expect:' \
   -T $imagePath \
